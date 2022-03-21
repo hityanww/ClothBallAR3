@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <title>ClothBall</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    </head>
+    <body>
+        <h1>ClothBall</h1>
+        
+        <model-viewer
+          id="ClothBall"
+          ar
+          ar-modes="scene-viewer webxr quick-look"
+          src="./source/ClothBall.glb"
+          ios-src="./source/ClothBall.usdz"
+          alt="ClothBall"
+          auto-rotate
+          camera-controls
+          <div class="controls">
+            <div>Variant: <select id="variant"></select></div>
+          </div>
+        ></model-viewer>
+        <script>
+            const modelViewerVariants = document.querySelector("model-viewer#ClothBall");
+            const select = document.querySelector('#variant');
+            
+            modelViewerVariants.addEventListener('load', () => {
+              const names = modelViewerVariants.availableVariants;
+              for (const name of names) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+              }
+              // Adds a default option.
+              const option = document.createElement('option');
+                option.value = 'default';
+                option.textContent = 'Default';
+                select.appendChild(option);
+            });
+            
+            select.addEventListener('input', (event) => {
+              modelViewerVariants.variantName = event.target.value === 'default' ? null : event.target.value;
+            });
+            </script>
+        <br>
+    </body>
+</html>
